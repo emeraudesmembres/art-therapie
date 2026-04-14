@@ -1,5 +1,15 @@
 [
   {
+    "slug": "christelle-vignollet",
+    "title": "Mémoire de fin de formation",
+    "author": "Christelle Vignollet",
+    "year": 2025,
+    "themes": ["Art-thérapie"],
+    "summary": "Travail de fin de formation en art-thérapie.",
+    "cover": "",
+    "pdf": "./pdfs/memoire-christelle-vignollet.pdf"
+  },
+  {
     "slug": "traces-vivantes",
     "title": "Traces vivantes : geste, matière et apaisement",
     "author": "Léa Martin",
