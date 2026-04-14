@@ -56,8 +56,6 @@ Elle **ne remplace pas** une sécurité serveur forte (pas de backend, pas de co
         ├── build/
         │   ├── pdf.min.mjs
         │   └── pdf.worker.min.mjs
-        ├── cmaps/
-        └── standard_fonts/
 ```
 
 ## Lancer en local
