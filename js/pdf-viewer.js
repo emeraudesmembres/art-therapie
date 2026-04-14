@@ -32,40 +32,51 @@ export async function initPdfViewer({
   }
 
   function updateControls() {
+    if (!pdfDoc) {
+      pageIndicator.textContent = "Page - / -";
+      prevButton.disabled = true;
+      nextButton.disabled = true;
+      return;
+    }
     pageIndicator.textContent = `Page ${currentPage} / ${pdfDoc.numPages}`;
     prevButton.disabled = currentPage <= 1;
     nextButton.disabled = currentPage >= pdfDoc.numPages;
   }
 
   async function renderPage(pageNumber) {
+    if (!pdfDoc) {
+      return;
+    }
     rendering = true;
 
-    const page = await pdfDoc.getPage(pageNumber);
-    const baseViewport = page.getViewport({ scale: 1 });
+    try {
+      const page = await pdfDoc.getPage(pageNumber);
+      const baseViewport = page.getViewport({ scale: 1 });
 
-    if (fitMode) {
-      const maxWidth = Math.max(300, canvasWrap.clientWidth - 40);
-      scale = Math.max(0.5, Math.min(2.4, maxWidth / baseViewport.width));
+      if (fitMode) {
+        const maxWidth = Math.max(300, canvasWrap.clientWidth - 40);
+        scale = Math.max(0.5, Math.min(2.4, maxWidth / baseViewport.width));
+      }
+
+      const viewport = page.getViewport({ scale });
+      const outputScale = window.devicePixelRatio || 1;
+
+      canvas.width = Math.floor(viewport.width * outputScale);
+      canvas.height = Math.floor(viewport.height * outputScale);
+      canvas.style.width = `${Math.floor(viewport.width)}px`;
+      canvas.style.height = `${Math.floor(viewport.height)}px`;
+
+      const renderContext = {
+        canvasContext: context,
+        viewport,
+        transform: outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null,
+      };
+
+      await page.render(renderContext).promise;
+      updateControls();
+    } finally {
+      rendering = false;
     }
-
-    const viewport = page.getViewport({ scale });
-    const outputScale = window.devicePixelRatio || 1;
-
-    canvas.width = Math.floor(viewport.width * outputScale);
-    canvas.height = Math.floor(viewport.height * outputScale);
-    canvas.style.width = `${Math.floor(viewport.width)}px`;
-    canvas.style.height = `${Math.floor(viewport.height)}px`;
-
-    const renderContext = {
-      canvasContext: context,
-      viewport,
-      transform: outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null,
-    };
-
-    await page.render(renderContext).promise;
-
-    rendering = false;
-    updateControls();
 
     if (pendingPage !== null) {
       const nextPendingPage = pendingPage;
@@ -75,6 +86,9 @@ export async function initPdfViewer({
   }
 
   async function queueRender(pageNumber) {
+    if (!pdfDoc) {
+      return;
+    }
     if (rendering) {
       pendingPage = pageNumber;
       return;
@@ -83,17 +97,23 @@ export async function initPdfViewer({
   }
 
   function changePage(delta) {
+    if (!pdfDoc) {
+      return;
+    }
     const nextPage = Math.min(pdfDoc.numPages, Math.max(1, currentPage + delta));
     if (nextPage !== currentPage) {
       currentPage = nextPage;
-      queueRender(currentPage);
+      void queueRender(currentPage);
     }
   }
 
   function zoom(delta) {
+    if (!pdfDoc) {
+      return;
+    }
     fitMode = false;
     scale = Math.max(0.5, Math.min(3, scale + delta));
-    queueRender(currentPage);
+    void queueRender(currentPage);
   }
 
   canvas.addEventListener("contextmenu", (event) => event.preventDefault());
@@ -104,7 +124,7 @@ export async function initPdfViewer({
   zoomOutButton.addEventListener("click", () => zoom(-0.15));
   fitButton.addEventListener("click", () => {
     fitMode = true;
-    queueRender(currentPage);
+    void queueRender(currentPage);
   });
 
   window.addEventListener("keydown", (event) => {
@@ -120,13 +140,14 @@ export async function initPdfViewer({
   });
 
   const resizeObserver = new ResizeObserver(() => {
-    if (fitMode) {
-      queueRender(currentPage);
+    if (fitMode && pdfDoc) {
+      void queueRender(currentPage);
     }
   });
   resizeObserver.observe(canvasWrap);
 
   setStatus("Chargement du mémoire...");
+  updateControls();
 
   const loadingTask = pdfjsLib.getDocument({
     url: resolvedPdfUrl,
