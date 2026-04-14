@@ -68,7 +68,8 @@ async function initViewer() {
       pageIndicator: document.querySelector("#page-indicator"),
       statusEl: document.querySelector("#viewer-status"),
     });
-  } catch {
+  } catch (error) {
+    console.error("Erreur de chargement du viewer PDF:", error);
     showError("Impossible de charger ce PDF. Vérifiez que le fichier existe dans le dossier pdfs/.");
   }
 }

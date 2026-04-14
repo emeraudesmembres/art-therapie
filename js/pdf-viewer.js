@@ -2,9 +2,6 @@ import * as pdfjsLib from "../vendor/pdfjs/build/pdf.min.mjs";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL("../vendor/pdfjs/build/pdf.worker.min.mjs", import.meta.url).toString();
 
-const cMapUrl = new URL("../vendor/pdfjs/cmaps/", import.meta.url).toString();
-const standardFontDataUrl = new URL("../vendor/pdfjs/standard_fonts/", import.meta.url).toString();
-
 export async function initPdfViewer({
   pdfUrl,
   canvas,
@@ -21,6 +18,7 @@ export async function initPdfViewer({
     throw new Error("PDF introuvable.");
   }
 
+  const resolvedPdfUrl = new URL(pdfUrl, window.location.href).toString();
   const context = canvas.getContext("2d", { alpha: false });
   let pdfDoc = null;
   let currentPage = 1;
@@ -131,10 +129,7 @@ export async function initPdfViewer({
   setStatus("Chargement du mémoire...");
 
   const loadingTask = pdfjsLib.getDocument({
-    url: pdfUrl,
-    cMapUrl,
-    cMapPacked: true,
-    standardFontDataUrl,
+    url: resolvedPdfUrl,
   });
 
   pdfDoc = await loadingTask.promise;
