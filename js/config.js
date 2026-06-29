@@ -1,6 +1,6 @@
 export const APP_CONFIG = {
   auth: {
-    passwordHash: "3216be68174ed69dc62572ec0d871925bbbb863c5ce143757d54adadd0d306b7",
+    passwordHash: "fb20fb198b727c64c325da0189dcf7cf65ea9176ad9bc3eb2609bfcbea401c0c",
     sessionKey: "arthea_library_session",
     persistentKey: "arthea_library_persistent",
     persistentDays: 7,

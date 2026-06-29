@@ -59,14 +59,23 @@ async function initViewer() {
     await initPdfViewer({
       pdfUrl: memoire.pdf,
       canvas: document.querySelector("#pdf-canvas"),
+      highlightLayer: document.querySelector("#pdf-highlight-layer"),
       canvasWrap: document.querySelector("#viewer-canvas-wrap"),
       prevButton: document.querySelector("#prev-page"),
       nextButton: document.querySelector("#next-page"),
       zoomInButton: document.querySelector("#zoom-in"),
       zoomOutButton: document.querySelector("#zoom-out"),
       fitButton: document.querySelector("#fit-width"),
+      fullscreenButton: document.querySelector("#fullscreen-button"),
       pageIndicator: document.querySelector("#page-indicator"),
+      pageJumpForm: document.querySelector("#page-jump-form"),
+      pageJumpInput: document.querySelector("#page-jump-input"),
+      searchForm: document.querySelector("#pdf-search-form"),
+      searchInput: document.querySelector("#pdf-search-input"),
+      searchPrevButton: document.querySelector("#search-prev"),
+      searchStatusEl: document.querySelector("#search-status"),
       statusEl: document.querySelector("#viewer-status"),
+      viewerShell: document.querySelector(".viewer-shell"),
     });
   } catch (error) {
     console.error("Erreur de chargement du viewer PDF:", error);
