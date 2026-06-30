@@ -1,11 +1,32 @@
 [
   {
     "slug": "christelle-vignollet",
-    "title": "Mémoire de fin de formation",
+    "title": "Art-thérapie, un outil précieux pour se reconnecter au monde et à soi",
     "author": "Christelle Vignollet",
     "year": 2025,
-    "themes": ["Art-thérapie"],
-    "summary": "Travail de fin de formation en art-thérapie.",
+    "themes": [
+      "Vieillesse",
+      "Tempéraments",
+      "Flegmatique",
+      "Mélancolique",
+      "Couleurs",
+      "Aquarelle",
+      "EMS",
+      "Blocs de cire",
+      "Magenta",
+      "Adulte",
+      "Cabinet privé",
+      "Dessin de formes",
+      "Perte d'élan",
+      "Intention",
+      "Âge de retournement",
+      "Dessin d'observation",
+      "Crayon",
+      "Modelage",
+      "Pastel",
+      "Corps platonicien"
+    ],
+    "summary": "Suivis art-thérapeutiques d'une personne âgée de 95 ans et d'un adulte de 35 ans en perte d'élan",
     "cover": "",
     "pdf": "./pdfs/memoire-christelle-vignollet.pdf"
   },
@@ -14,7 +35,11 @@
     "title": "Traces vivantes : geste, matière et apaisement",
     "author": "Léa Martin",
     "year": 2024,
-    "themes": ["Corps", "Matière", "Apaisement"],
+    "themes": [
+      "Corps",
+      "Matière",
+      "Apaisement"
+    ],
     "summary": "Ce mémoire explore comment les matières naturelles et le travail du geste soutiennent l'apaisement émotionnel en atelier d'art-thérapie.",
     "cover": "./assets/covers/traces-vivantes.svg",
     "pdf": "./pdfs/memoire-traces-vivantes.pdf"
@@ -24,7 +49,11 @@
     "title": "Cartographie des émotions en atelier collectif",
     "author": "Nora Delcourt",
     "year": 2023,
-    "themes": ["Groupe", "Émotions", "Médiations"],
+    "themes": [
+      "Groupe",
+      "Émotions",
+      "Médiations"
+    ],
     "summary": "Une étude des dispositifs collectifs qui permettent de représenter les émotions et de renforcer l'écoute entre participant·es.",
     "cover": "./assets/covers/cartographie-emotions.svg",
     "pdf": "./pdfs/memoire-cartographie-emotions.pdf"
@@ -34,7 +63,11 @@
     "title": "Corps et couleur : vers une présence sensible",
     "author": "Maya Renaud",
     "year": 2022,
-    "themes": ["Couleur", "Présence", "Rituel"],
+    "themes": [
+      "Couleur",
+      "Présence",
+      "Rituel"
+    ],
     "summary": "Recherche autour de rituels colorés favorisant l'ancrage corporel, la régulation émotionnelle et l'expression symbolique.",
     "cover": "./assets/covers/corps-couleur.svg",
     "pdf": "./pdfs/memoire-corps-couleur.pdf"
