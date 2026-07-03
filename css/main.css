@@ -396,7 +396,7 @@ input::placeholder {
 .filters {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 2fr repeat(3, minmax(150px, 1fr));
+  grid-template-columns: 2fr repeat(2, minmax(170px, 1fr));
   margin-bottom: 1rem;
 }
 

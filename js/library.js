@@ -6,7 +6,6 @@ const errorEl = document.querySelector("#library-error");
 const emptyEl = document.querySelector("#empty-state");
 
 const searchInput = document.querySelector("#search-input");
-const yearSelect = document.querySelector("#year-filter");
 const authorSelect = document.querySelector("#author-filter");
 const themeSelect = document.querySelector("#theme-filter");
 const resetButton = document.querySelector("#reset-filters");
@@ -141,17 +140,12 @@ function createMemoireCard(memoire) {
 function currentFilters() {
   return {
     search: normalizeText(searchInput.value),
-    year: yearSelect.value,
     author: normalizeText(authorSelect.value),
     theme: normalizeText(themeSelect.value),
   };
 }
 
 function matchesFilters(memoire, filters) {
-  if (filters.year && String(memoire.year || "") !== filters.year) {
-    return false;
-  }
-
   if (filters.author && normalizeText(memoire.author) !== filters.author) {
     return false;
   }
@@ -199,7 +193,6 @@ function applyFilters() {
 
 function resetFilters() {
   searchInput.value = "";
-  yearSelect.value = "";
   authorSelect.value = "";
   themeSelect.value = "";
   applyFilters();
@@ -210,13 +203,12 @@ async function initLibrary() {
     clearError();
     memoires = await loadMemoires();
 
-    fillSelect(yearSelect, getUniqueValues(memoires, "year").reverse(), "Toutes");
     fillSelect(authorSelect, getUniqueValues(memoires, "author"), "Tous");
     fillSelect(themeSelect, getUniqueValues(memoires, "themes"), "Tous");
 
     renderList(memoires);
 
-    [searchInput, yearSelect, authorSelect, themeSelect].forEach((input) => {
+    [searchInput, authorSelect, themeSelect].forEach((input) => {
       input.addEventListener("input", applyFilters);
       input.addEventListener("change", applyFilters);
     });
