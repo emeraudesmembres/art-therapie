@@ -40,7 +40,7 @@
 
           <div class="viewer-layout">
             <aside class="panel viewer-panel" aria-labelledby="memoire-title">
-              <a class="button secondary" href="./library.html" style="margin-bottom: 1rem">← Retour à la bibliothèque</a>
+              <a class="button secondary" href="./library.html" style="margin-bottom: 1rem">Retour à la bibliothèque</a>
               <h1 id="memoire-title">Chargement...</h1>
               <p class="muted" id="memoire-author"></p>
               <p class="muted" id="memoire-year"></p>
@@ -51,31 +51,34 @@
 
             <section class="viewer-shell" aria-label="Visionneuse du mémoire">
               <div class="viewer-toolbar">
-                <div class="toolbar-group" aria-label="Navigation entre les pages">
+                <div class="toolbar-group toolbar-pages" aria-label="Navigation entre les pages">
+                  <span id="page-indicator" class="muted" aria-live="polite">Page - / -</span>
                   <button id="prev-page" type="button">Page précédente</button>
                   <button id="next-page" type="button">Page suivante</button>
-                  <span id="page-indicator" class="muted" aria-live="polite">Page - / -</span>
                 </div>
+
                 <form class="toolbar-group page-jump-form" id="page-jump-form" aria-label="Aller à une page">
                   <label for="page-jump-input">Aller à</label>
                   <input id="page-jump-input" name="page" type="number" min="1" inputmode="numeric" autocomplete="off" />
                   <button type="submit">OK</button>
                 </form>
+
                 <form class="toolbar-group search-form" id="pdf-search-form" aria-label="Recherche dans le PDF">
                   <label for="pdf-search-input">Rechercher</label>
                   <input id="pdf-search-input" name="query" type="search" placeholder="Mot ou expression" autocomplete="off" />
-                  <button id="search-prev" type="button">Préc.</button>
-                  <button id="search-next" type="submit">Suiv.</button>
+                  <button id="search-prev" type="button">Précédent</button>
+                  <button id="search-next" type="submit">Suivant</button>
                   <span id="search-status" class="muted" aria-live="polite"></span>
                 </form>
+
                 <div class="toolbar-group" aria-label="Affichage">
                   <button id="zoom-out" type="button">- Zoom</button>
                   <button id="zoom-in" type="button">+ Zoom</button>
                   <button id="fit-width" type="button">Ajuster</button>
                   <button id="fullscreen-button" type="button">Plein écran</button>
                 </div>
-                <span id="viewer-status" class="muted viewer-status" aria-live="polite"></span>
               </div>
+
               <div class="viewer-canvas-wrap" id="viewer-canvas-wrap">
                 <div class="pdf-page-frame">
                   <canvas id="pdf-canvas" aria-label="Page du mémoire"></canvas>
