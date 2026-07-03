@@ -74,7 +74,6 @@ async function initViewer() {
       searchInput: document.querySelector("#pdf-search-input"),
       searchPrevButton: document.querySelector("#search-prev"),
       searchStatusEl: document.querySelector("#search-status"),
-      statusEl: document.querySelector("#viewer-status"),
       viewerShell: document.querySelector(".viewer-shell"),
     });
   } catch (error) {

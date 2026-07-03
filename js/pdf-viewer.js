@@ -20,7 +20,6 @@ export async function initPdfViewer({
   searchInput,
   searchPrevButton,
   searchStatusEl,
-  statusEl,
   viewerShell,
 }) {
   if (!pdfUrl) {
@@ -39,10 +38,6 @@ export async function initPdfViewer({
   let searchMatches = [];
   let activeMatchIndex = -1;
   let lastSearchQuery = "";
-
-  function setStatus(message) {
-    statusEl.textContent = message;
-  }
 
   function normalizeSearchText(value) {
     return String(value || "")
@@ -356,7 +351,6 @@ export async function initPdfViewer({
   });
   resizeObserver.observe(canvasWrap);
 
-  setStatus("Chargement du mémoire...");
   updateControls();
 
   const loadingTask = pdfjsLib.getDocument({
@@ -364,9 +358,7 @@ export async function initPdfViewer({
   });
 
   pdfDoc = await loadingTask.promise;
-  setStatus("Indexation du texte...");
   await buildTextIndex();
-  setStatus("Lecture active");
 
   await queueRender(currentPage);
 }

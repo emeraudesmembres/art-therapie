@@ -38,17 +38,71 @@ function createTag(text) {
   return tag;
 }
 
+function createMeta(label, value) {
+  const item = document.createElement("span");
+  item.className = "memoire-meta-item";
+
+  const labelEl = document.createElement("span");
+  labelEl.textContent = label;
+
+  item.append(labelEl, document.createTextNode(value));
+  return item;
+}
+
+function createThemeRow(themes) {
+  const row = document.createElement("div");
+  row.className = "badge-row";
+
+  for (const theme of themes) {
+    row.append(createTag(theme));
+  }
+
+  return row;
+}
+
+function createThemeBlock(themes = []) {
+  const block = document.createElement("div");
+  block.className = "theme-block";
+
+  const visibleThemes = themes.slice(0, 8);
+  const hiddenThemes = themes.slice(8);
+
+  block.append(createThemeRow(visibleThemes));
+
+  if (hiddenThemes.length > 0) {
+    const details = document.createElement("details");
+    details.className = "theme-details";
+
+    const summary = document.createElement("summary");
+    summary.textContent = `Voir ${hiddenThemes.length} mot${hiddenThemes.length > 1 ? "s" : ""}-clé${hiddenThemes.length > 1 ? "s" : ""} de plus`;
+
+    details.append(summary, createThemeRow(hiddenThemes));
+    block.append(details);
+  }
+
+  return block;
+}
+
 function createMemoireCard(memoire) {
   const article = document.createElement("article");
   article.className = "memoire-card";
+
+  const viewerHref = `./viewer.html?slug=${encodeURIComponent(memoire.slug)}`;
+
+  const coverLink = document.createElement("a");
+  coverLink.className = "memoire-cover-link";
+  coverLink.href = viewerHref;
+  coverLink.setAttribute("aria-label", `Consulter le mémoire ${memoire.title}`);
 
   const cover = document.createElement("img");
   cover.className = "memoire-cover";
   cover.src = memoire.cover || "./assets/covers/traces-vivantes.svg";
   cover.alt = `Couverture du mémoire ${memoire.title}`;
   cover.loading = "lazy";
+  coverLink.append(cover);
 
   const content = document.createElement("div");
+  content.className = "memoire-content";
 
   const header = document.createElement("div");
   header.className = "memoire-header";
@@ -56,35 +110,30 @@ function createMemoireCard(memoire) {
   const title = document.createElement("h2");
   title.className = "memoire-title";
   title.textContent = memoire.title;
+  header.append(title);
 
-  const year = document.createElement("span");
-  year.className = "muted";
-  year.textContent = memoire.year ? String(memoire.year) : "Année non renseignée";
-
-  header.append(title, year);
-
-  const author = document.createElement("p");
-  author.className = "muted";
-  author.textContent = memoire.author;
+  const meta = document.createElement("div");
+  meta.className = "memoire-meta";
+  meta.append(
+    createMeta("Auteur/autrice", memoire.author || "Non renseigné"),
+    createMeta("Année", memoire.year ? String(memoire.year) : "Non renseignée"),
+  );
 
   const summary = document.createElement("p");
-  summary.textContent = memoire.summary;
-
-  const tagRow = document.createElement("div");
-  tagRow.className = "badge-row";
-  for (const theme of memoire.themes) {
-    tagRow.append(createTag(theme));
-  }
+  summary.className = "memoire-summary";
+  summary.textContent = memoire.summary || "Résumé non renseigné.";
 
   const actions = document.createElement("div");
+  actions.className = "memoire-actions";
+
   const openButton = document.createElement("a");
   openButton.className = "button";
-  openButton.href = `./viewer.html?slug=${encodeURIComponent(memoire.slug)}`;
+  openButton.href = viewerHref;
   openButton.textContent = "Consulter";
   actions.append(openButton);
 
-  content.append(header, author, summary, tagRow, actions);
-  article.append(cover, content);
+  content.append(header, meta, summary, createThemeBlock(memoire.themes), actions);
+  article.append(coverLink, content);
 
   return article;
 }
